@@ -1,0 +1,37 @@
+<section th:fragment="passengerList" class="modal fade" id="showPassengerList" data-bs-backdrop="static"
+         data-bs-keyboard="false"
+         tabindex="-1" aria-labelledby="passengers" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="passengers">Passenger List</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="col-12">
+                    <thead>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Actions</th>
+                    </thead>
+                    <tbody>
+                    <tr th:each="passenger : ${flight.getPassengerList()}">
+                        <td th:utext="${passenger.getAccount().getUsername()} + '(' + ${passenger.getAccount().getGender()} + ')'"></td>
+                        <td th:utext="${passenger.isTransitPassenger()} ? #{d_transit} : #{d_non-transit}"></td>
+                        <td>
+                            <a th:href="@{../passengers/details(pn=${passenger.getAccount().getUsername()})}"
+                               class="btn btn-primary">Details
+                            </a>
+                            <input type="hidden" id="pId" th:value="${passenger.id}">
+                            <button type="button" class="btn btn-danger" id="removeFromFlight"
+                                    sec:authorize="hasRole('ROLE_ADMIN')">Remove
+                            </button>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Error</title>
+    <link rel="stylesheet" th:href="@{/css/bundle.css}">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css} "/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body>
+<h1 th:text="'Flight \'' + ${exception.flightNumber} + '\' not found!'"></h1>
+<h5>Please make sure that you entered a valid flight number</h5>
+<a th:href="@{../home}">Go Back</a>
+</body>
+</html>

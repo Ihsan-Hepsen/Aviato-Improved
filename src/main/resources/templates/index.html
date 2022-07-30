@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" th:href="@{/css/bundle.css}">
+    <link rel="icon" type="image/png" th:href="@{fav_icon.png}"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script defer src="/js/bundle-flightSearch.js"></script>
+    <script defer src="/js/bundle-graphqlNewFlight.js"></script>
+    <title>Aviato</title>
+</head>
+<body class="index-page">
+<header th:insert="~{nav::navbar}"></header>
+<main>
+    <section class="img-main container-xxl">
+        <h1>Aviato</h1>
+        <p th:utext="#{catchline}">Let's discover places!</p>
+    </section>
+    <section class="fn-search container-lg">
+        <form method="get" th:action="@{../flights/details}" class="col align-content-center">
+            <h2>Search Flights</h2>
+            <div class="mb-3">
+                <label for="flightNumber" class="form-label visually-hidden"></label>
+                <input id="flightNumber" class="form-control" name="fn" type="text" placeholder="Enter flight number here" required>
+            </div>
+            <button id="flightSearchBtn" class="submit-button" type="submit" th:value="Search">
+                <i class="bi bi-search"></i> Find Flight
+            </button>
+        </form>
+    </section>
+</main>
+<footer th:insert="~{footer::copy}">Aviato &#169; 2021</footer>
+</body>
+</html>

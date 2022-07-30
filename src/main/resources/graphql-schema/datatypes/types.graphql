@@ -1,0 +1,52 @@
+# Object Types
+enum FlightType {
+    COMM, PRIV
+}
+
+enum Role {
+    PASSENGER, AIRLINE
+}
+
+enum Gender {
+    F, M
+}
+
+type User {
+    id: Int
+    username: String
+    email: String
+    password: String!
+    age: Int!
+    gender: Gender
+    role: Role!
+}
+
+type Passenger {
+    id: Int
+    transitPassenger: Boolean!
+    flights: [Flight]
+    account: User
+}
+
+scalar LocalDate
+
+type Flight {
+    id: Int
+    airline: Airline
+    flightNumber: String!
+    flightType: FlightType!
+    departure: String!
+    arrival: String!
+    scheduledOn: LocalDate!
+    onTime: Boolean!
+    passengerList: [Passenger]!
+}
+
+type Airline {
+    id: Int
+    airlineName: String!
+    fleetSize: Int!
+    totalDestinations: Int!
+    flightList: [Flight]
+    account: User
+}

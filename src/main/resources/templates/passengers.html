@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" th:href="@{/css/bundle.css}">
+    <link rel="icon" type="image/png" th:href="@{/fav_icon.png}"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script defer src="/js/bundle-passengerFiltering.js"></script>
+    <script defer src="/js/bundle-detailPopBox.js"></script>
+    <title>Passengers</title>
+</head>
+<body class="container-fluid index">
+<header th:insert="~{nav::navbar}"></header>
+<h1 th:utext="#{passengers_h}">All Passengers</h1>
+<main class="table-responsive table-section">
+    <div class="row-cols-auto">
+        <table class="table">
+            <thead>
+            <tr>
+                <th th:utext="#{name}">Name</th>
+                <th th:utext="#{age}">Age</th>
+                <th th:utext="#{gender}">Gender</th>
+                <th th:utext="#{transit}">Transit</th>
+                <th th:utext="#{flights}">Flights</th>
+                <th>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            List By
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                            <li><a th:href="@{../passengers}" class="dropdown-item">All Passengers</a></li>
+                            <li><a th:href="@{../passengers/filtered(t = true)}" class="dropdown-item">Transit
+                                Passengers</a></li>
+                            <li><a th:href="@{../passengers/filtered(t = false)}" class="dropdown-item">Non-transit
+                                Passengers</a></li>
+                        </ul>
+                    </div>
+                </th>
+            </tr>
+            </thead>
+            <tbody id="tableBody">
+            <tr th:each="passenger : ${passengers}">
+                <td th:text="${passenger.getName()}"></td>
+                <td th:text="${passenger.getAge()}"></td>
+                <td th:text="${passenger.getGender()}"></td>
+                <td th:utext="${passenger.isTransitPassenger()} ? #{t_yes} : #{t_no}"></td>
+                <td th:text="${passenger.getNumberOfFlights()}"></td>
+                <td><a th:href="@{../passengers/details(pn=${passenger.getName()})}" th:utext="#{p_detail}">details</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
+            <a th:href="@{../passengers/add}" id="button" class="btn btn-primary btn-lg"><i
+                    class="bi bi-plus-circle"></i> Add Passenger</a>
+            <div id="tooltip" role="tooltip">
+                Click to add a new passenger
+                <div id="arrow" data-popper-arrow></div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row-cols-auto">
+        <form>
+            <label for="searchName">Search passenger by name</label>
+            <input type="text" id="searchName" name="searchName" placeholder="Johnny, Alice..">
+            <button id="searchButton" class="submit-button" name="searchButton" type="button"><i
+                    class="bi bi-search"></i> Find Passenger
+            </button>
+        </form>
+    </div>
+</main>
+<footer th:insert="~{footer::copy}">Aviato &#169; 2021</footer>
+</body>
+</html>

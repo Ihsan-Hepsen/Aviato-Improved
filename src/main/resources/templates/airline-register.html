@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="_csrf" th:content="${_csrf.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+  <link rel="stylesheet" th:href="@{/css/bundle.css}">
+  <link rel="icon" type="image/png" th:href="@{fav_icon.png}"/>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+  <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  <script defer src="/js/bundle-registration.js"></script>
+  <title>Airline Registration - Aviato</title>
+</head>
+<body class="container-fluid index-page">
+<header th:insert="~{nav::navbar}"></header>
+<main class="container-fluid">
+  <h3>Airline Registration</h3>
+  <form th:method="post" class="row">
+    <div class="col-xl-4 col-sm-6 col-xs-6">
+    </div>
+    <label for="airlineName">Airline name</label>
+    <input id="airlineName" type="text" name="airlineName">
+<!--    <div th:if="${#fields.hasErrors('name')}" th:errors="*{airlineName}" class="alert alert-danger alert-message-box" role="alert"></div>-->
+    <label for="fleet">Fleet size</label>
+    <input id="fleet" type="number" name="fleet">
+<!--    <div th:if="${#fields.hasErrors('fleet')}" class="alert alert-danger alert-message-box" role="alert"></div>-->
+    <label for="numDest">Number of destinations</label>
+    <input id="numDest" type="number" name="numDest">
+    <label for="email">Email</label>
+    <input id="email" type="text" name="email" placeholder="example@mail.com">
+<!--    <div th:if="${#fields.hasErrors('numDest')}" class="alert alert-danger alert-message-box" role="alert"></div>-->
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" placeholder="* * * * *">
+    <label for="password2">Retype Password</label>
+    <input id="password2" name="password2" type="password" placeholder="* * * * *">
+    <br>
+    <button class="submit-button" id="signUpButton" type="submit">Register Airline</button>
+  </form>
+  <p class="fs-6"><strong>For passenger registration form click <a th:href="@{/register}">here</a></strong></p>
+  <p class="fs-6"><strong>Already have an Aviato account? <a th:href="@{/login}">Log in</a> here!</strong></p>
+</main>
+</body>
+</html>

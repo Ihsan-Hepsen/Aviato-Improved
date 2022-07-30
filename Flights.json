@@ -1,0 +1,65 @@
+[
+  {
+    "airline": {
+      "airlineName": "Turkish Airlines",
+      "fleetSize": 350,
+      "totalDestinations": 304
+    },
+    "flightNumber": "TK77",
+    "flightType": "COMM",
+    "departure": "Istanbul",
+    "arrival": "Miami",
+    "scheduledOn": "2021-09-22",
+    "isOnTime": false,
+    "passengerList": [
+      {
+        "name": "Jessica Cooper",
+        "age": 23,
+        "gender": "F",
+        "transit": true
+      }
+    ]
+  },
+  {
+    "airline": {
+      "airlineName": "Private Voyages",
+      "fleetSize": 11,
+      "totalDestinations": 13
+    },
+    "flightNumber": "HI1204",
+    "flightType": "PRIV",
+    "departure": "New York",
+    "arrival": "Miami",
+    "scheduledOn": "2021-09-23",
+    "isOnTime": false,
+    "passengerList": [
+      {
+        "name": "Kül Tigin",
+        "age": 37,
+        "gender": "M",
+        "transit": false
+      }
+    ]
+  },
+  {
+    "airline": {
+      "airlineName": "Bahamas Air",
+      "fleetSize": 10,
+      "totalDestinations": 32
+    },
+    "flightNumber": "BHS224",
+    "flightType": "COMM",
+    "departure": "Miami",
+    "arrival": "Nassau",
+    "scheduledOn": "2021-09-23",
+    "isOnTime": false,
+    "passengerList": [
+      {
+        "name": "Jessica Cooper",
+        "age": 23,
+        "gender": "F",
+        "transit": true
+      }
+    ]
+  }
+]

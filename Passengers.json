@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Johnny Thunder",
+    "age": 21,
+    "gender": "M",
+    "transit": true
+  },
+  {
+    "name": "Jessica Cooper",
+    "age": 23,
+    "gender": "F",
+    "transit": true
+  },
+  {
+    "name": "Padme McKinney",
+    "age": 35,
+    "gender": "F",
+    "transit": false
+  },
+  {
+    "name": "Kilroy Barron",
+    "age": 52,
+    "gender": "M",
+    "transit": false
+  },
+  {
+    "name": "Senor Palomar",
+    "age": 32,
+    "gender": "M",
+    "transit": false
+  },
+  {
+    "name": "Kül Tigin",
+    "age": 37,
+    "gender": "M",
+    "transit": false
+  }
+]

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" th:href="@{/css/bundle.css}">
+    <link rel="icon" type="image/png" th:href="@{/fav_icon.png}"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script defer src="/js/bundle-handleAirline.js"></script>
+    <title>Airline Details</title>
+</head>
+<body class="container-fluid index">
+<header th:insert="~{nav::navbar}"></header>
+<main class="row">
+    <section class="detail-box col-xl-6">
+        <h2><span th:text="${airline.getAirlineName() + ' '}"></span><span th:utext="#{detail}"></span></h2>
+        <hr>
+        <div class="details">
+            <p><b>Fleet Size: </b><span id="fleetSizeField" th:utext="${airline.getFleetSize()} + ' ' + #{fleet_size}"></span></p>
+            <p><b>Destinations: </b><span th:utext="${airline.getTotalDestinations()} + ' ' + #{destinations}"></span>
+            </p>
+            <p><b>Flights: </b><span th:utext="${airline.getFlightList().size()}"></span></p>
+            <ul th:each="flight : ${airline.getFlightList()}">
+                <li th:text="${flight.getFlightNumber()} + ': '+ ${flight.getDeparture()} + ' ' + #{p_d_d1} +
+                 ' '+ ${flight.getArrival()} + ' ' + #{p_d_d2}"></li>
+            </ul>
+            <section sec:authorize="hasRole('ROLE_ADMIN')">
+                <hr>
+                <div class="action-buttons row-cols-3">
+                    <input type="hidden" th:value="${airline.id}">
+                    <button type="button" class="btn btn-outline-danger" id="deleteButton">Remove</button>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop">
+                        Edit
+                    </button>
+
+                    <!-- Modal -->
+                    <section class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                             tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered container-fluid">
+                            <div class="modal-content row">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Update Airline</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body col-12">
+                                    <label for="fleetSize"><strong>New Fleet Size:</strong></label>
+                                    <input type="number" min="1" name="fleetSize" id="fleetSize"
+                                           placeholder="new fleet size">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Discard</button>
+                                    <input type="hidden" th:value="${airline.id}">
+                                    <button type="button" id="editButton" class="btn btn-primary">Save Changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </div>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<section th:fragment="bookFlight" class="modal fade" id="bookFlight" data-bs-backdrop="static"
+         data-bs-keyboard="false"
+         tabindex="-1" aria-labelledby="passengers" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="passengers">Book Your Flight</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div>
+                <select name="flight" id="flight" class="form-select form-select-lg mb-3 booking-list" aria-label="multiple select example">
+                    <option>Select your flight</option>
+                    <option th:each="flight : ${flights}" th:id="${flight.getId()}"
+                            th:text="${flight.getDeparture()} + ' - ' + ${flight.getArrival()} +
+                         ' | ' + ${flight.getAirline().getAirlineName()}"></option>
+                </select>
+            </div>
+            <div class="alert alert-danger visually-hidden" role="alert" id="alert-box">
+                <i class="bi bi-exclamation-triangle-fill"></i>
+                Cannot book the flight. Please Try again later.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="bookButton" class="btn btn-outline-success">Book</button>
+            </div>
+        </div>
+    </div>
+</section>
+

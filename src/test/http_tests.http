@@ -1,0 +1,420 @@
+### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ###
+# WEEK - 1
+### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ###
+# Flights
+# possible status responses: 200 & 500 (also 404 if the URL is mistyped)
+#Response: 200
+GET http://localhost:4506/api/flight?fId=3 HTTP/1.1
+Accept: application/json
+
+###
+
+#Response: 404 - Not Found
+GET http://localhost:4506/api/flight?fId=12 HTTP/1.1
+Accept: application/json
+
+###
+
+#Response: 200 - OK
+GET http://localhost:4506/api/flights HTTP/1.1
+Accept: application/json
+
+###
+
+# get flight by flight nubmer
+# possible status responses: 200 & 400 (also 404 if the URL is mistyped)
+#Response: 200 - OK
+GET http://localhost:4506/api/flight/QF12 HTTP/1.1
+Accept: application/json
+
+###
+
+#Response: 400 - Bad Request (FlightNotFoundException was thrown)
+GET http://localhost:4506/api/flight/QF09 HTTP/1.1
+Accept: application/json
+
+###
+
+# delete flgiht with ID: 1 (Qantas Airlines, flight: QF12)
+#Response: 403 unless you're an authanticated airline
+DELETE http://localhost:4506/api/flights/1 HTTP/1.1
+Accept: application/json
+
+###
+
+#Response: 403 & 404 for authanticated airlines
+DELETE http://localhost:4506/api/flights/15 HTTP/1.1
+Accept: application/json
+
+###
+
+# Airlines
+#Response: 200
+GET http://localhost:4506/api/airline?aId=5 HTTP/1.1
+Accept: application/json
+
+###
+
+#Response: 200
+GET http://localhost:4506/api/airlines HTTP/1.1
+Accept: application/json
+
+###
+
+# Deleting airline with Airline ID: 3
+#Response: 204 OR 403
+DELETE http://localhost:4506/api/airlines/3 HTTP/1.1
+Accept: application/json
+
+###
+
+#Response: 403 OR 404
+DELETE http://localhost:4506/api/airlines/30 HTTP/1.1
+Accept: application/json
+
+###
+
+# Passengers
+#Repsonse: 200 - OK
+GET http://localhost:4506/api/passenger?pId=1 HTTP/1.1
+Accept: application/json
+
+###
+
+#Reponse: 200 - OK
+GET http://localhost:4506/api/passengers HTTP/1.1
+Accept: application/json
+
+###
+
+#Response: 200 - OK
+GET http://localhost:4506/api/passengers/Kül Tigin HTTP/1.1
+Accept: application/json
+
+###
+
+#Response: 404
+GET http://localhost:4506/api/passengers/Jack Sparrow HTTP/1.1
+Accept: application/json
+
+###
+
+#Response: 403 OR 204
+DELETE http://localhost:4506/api/passengers/5 HTTP/1.1
+Accept: application/json
+
+###
+
+#Response: 403 OR 404
+DELETE http://localhost:4506/api/passengers/50 HTTP/1.1
+Accept: application/json
+
+### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ###
+# WEEK - 2
+### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ###
+# Flight Entity - HTTP PUT
+# Response: 204 OR 403
+PUT localhost:4506/api/flights/1 HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": 1,
+  "scheduledOn": "2022-02-20",
+  "onTime": false
+}
+
+###
+# Response: 403
+PUT localhost:4506/api/flights/3 HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": 1,
+  "scheduledOn": "2022-02-20",
+  "onTime": false
+}
+
+###
+# Response: 404
+PUT http://localhost:4506/api/flights/15 HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": 15,
+  "scheduledOn": "2022-02-20",
+  "onTime": false
+}
+
+###
+
+# Flight Entity - HTTP POST
+#Response; 403 OR 201
+POST http://localhost:4506/api/flights HTTP/1.1
+Content-Type: application/json
+
+{
+  "id": 11,
+  "airline": "Private Voyages",
+  "flightNumber": "HI4535",
+  "flightType": "PRIV",
+  "departure": "Brooks Ville",
+  "arrival": "Charleston",
+  "scheduledOn": "2022-05-13",
+  "onTime": true
+}
+
+###
+
+POST http://localhost:4506/api/flights HTTP/1.1
+Content-Type: application/json
+
+{
+  "id": 12,
+  "airline": "South Atlantic Airlines",
+  "flightNumber": "HI4535",
+  "flightType": "PRIV",
+  "departure": "Orlando",
+  "arrival": "Savannah",
+  "scheduledOn": "2022-02-27",
+  "onTime": false
+}
+
+###
+
+# Passenger Entity - HTTP PUT
+# Response: 204
+PUT http://localhost:4506/api/passengers/1 HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Jack Sparrow",
+  "age": 33
+}
+
+###
+
+# Response: 409
+PUT http://localhost:4506/api/passengers/1 HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": 4,
+  "name": "Jack Sparrow",
+  "age": 33
+}
+
+###
+
+# Response: 404
+PUT http://localhost:4506/api/passengers/45 HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": 45,
+  "name": "Jack Sparrow",
+  "age": 33
+}
+
+###
+
+# Passenger Entity - HTTP POST
+POST http://localhost:4506/api/passengers HTTP/1.1
+Content-Type: application/json
+
+{
+  "id": 109,
+  "name": "Pippin Reed",
+  "age": 26,
+  "gender": "F",
+  "transitPassenger": false
+}
+
+
+###
+#  Response: 400 (Passenger with id:1 already exists)
+POST http://localhost:4506/api/passengers HTTP/1.1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Pippin Reed",
+  "age": 26,
+  "gender": "F",
+  "transitPassenger": false
+}
+
+###
+
+# Airline Entity - HTTP PUT
+# Response: 204
+PUT http://localhost:4506/api/airlines/14
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": 14,
+  "fleetSize": 7
+}
+
+###
+
+# Response: 404
+PUT http://localhost:4506/api/airlines/17
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": 17,
+  "fleetSize": 126
+}
+
+###
+
+# Response: 409
+PUT http://localhost:4506/api/airlines/13
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": 1,
+  "fleetSize": 126
+}
+
+###
+
+# Airline Entity - HTTP POST
+# Response: 400
+POST http://localhost:4506/api/airlines HTTP/1.1
+Content-Type: application/json
+
+{
+  "id": 15,
+  "airlineName": "West-Indies Airlines",
+  "fleetSize": 43,
+  "totalDestinations": 27,
+  "flights": []
+}
+
+###
+# Response: 400
+POST http://localhost:4506/api/airlines HTTP/1.1
+Content-Type: application/json
+
+{
+"id": 1,
+"airlineName": "West-Indies Airlines",
+"fleetSize": 43,
+"totalDestinations": 27,
+"flights": []
+}
+
+###
+
+# GET Requests w/ XML - Airline
+
+# Response: 200
+GET http://localhost:4506/api/airlines HTTP/1.1
+Accept: application/xml
+
+###
+
+# Response: 404
+GET http://localhost:4506/api/airline?aId=18 HTTP/1.1
+Accept: application/xml
+
+###
+
+# Response: 404
+GET http://localhost:4506/api/airliness HTTP/1.1
+Accept: application/xml
+
+###
+
+# GET Requests w/ XML - Flight
+
+# Response: 200
+GET http://localhost:4506/api/flights HTTP/1.1
+Accept: application/xml
+
+###
+
+# Response: 204
+GET http://localhost:4506/api/flight?fId=13 HTTP/1.1
+Accept: application/xml
+
+###
+
+# Response: 404
+GET http://localhost:4506/api/flgihts HTTP/1.1
+Accept: application/xml
+
+###
+
+# GET Requests w/ XML - Passenger
+
+# Response: 200
+GET http://localhost:4506/api/passengers HTTP/1.1
+Accept: application/xml
+
+###
+
+# Response: 204
+GET http://localhost:4506/api/passenger?pId=9 HTTP/1.1
+Accept: application/xml
+
+###
+
+# Response: 404
+GET http://localhost:4506/api/passangers HTTP/1.1
+Accept: application/xml
+
+###
+
+POST http://localhost:4506/api/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "test",
+  "email": "ihsanhepsen@gmail.com",
+  "password": "test"
+}
+
+###
+POST http://localhost:4506/graphql HTTP/1.1
+X-CSRF-TOKEN:
+Accept: application/json
+Content-Type: application/json
+Cookie:
+
+{
+  getFlightByFlightNumber(flightNumber: "${searchTerm}") {
+    airline {
+      airlineName
+      }
+    flightNumber
+    flightType
+    departure
+    arrival
+    onTime
+  }
+}
+
+###
+# GraphQL Test
+
+POST http://localhost:4506/graphql
+Content-Type: text/plain
+Accept: text/plain
+
+{
+    getFlights {
+        id
+    }
+}

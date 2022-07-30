@@ -1,0 +1,44 @@
+# Schema for Ihsan Hepsen's main java Spring Project 2021-2022
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Query {
+    # Airline
+    getAirlines: [Airline]
+    getAirline(id: Int): Airline
+    getAirline(airlineName: String): Airline
+
+    # Flight
+    getFlights: [Flight]
+    getFlightById(id: Int): Flight
+    getFlightByFlightNumber(flightNumber: String!): Flight
+
+    # Passenger
+    getPassengers: [Passenger]
+    getPassenger(id: Int): Passenger
+    getPassenger(name: String): Passenger
+}
+
+scalar Void
+
+type Mutation {
+    addFlight(airline: String!,
+        flightNumber: String!,
+        flightType: FlightType!,
+        departure: String!,
+        arrival: String!,
+        scheduledOn: String!,
+        onTime: Boolean!): Flight!
+    updateFlight(id: Int!, scheduledOn: LocalDate!, onTime: Boolean!): Void
+    deleteFlight(id: Int!): Void
+
+    updateAirline(id: Int!, fleetSize: Int!): Airline
+    deleteAirline(id: Int!): Void
+
+    updatePassenger(id: Int!, age: Int!): Passenger
+    deletePassenger(id: Int!): Void
+}
+

@@ -1,0 +1,36 @@
+{
+  "name": "ifbs",
+  "version": "0.1.0",
+  "description": "PROGRAMMING 2.3 SELF PROJECT - Ihsan Hepsen",
+  "main": "index.js",
+  "dependencies": {
+    "animejs": "^3.2.1"
+  },
+  "devDependencies": {
+    "@popperjs/core": "^2.11.2",
+    "flatpickr": "^4.6.9",
+    "css-loader": "^6.4.0",
+    "bootstrap-icons": "^1.8.1",
+    "mini-css-extract-plugin": "^2.4.2",
+    "sass": "^1.49.8",
+    "sass-loader": "^12.6.0",
+    "source-map-loader": "^3.0.0",
+    "webpack": "^5.58.2",
+    "webpack-cli": "^4.9.0",
+    "sweetalert2": "^11.4.9"
+  },
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/kdg-ti/programming-2.3/projects-21-22/ihsan.hepsen.git"
+  },
+  "author": "Ihsan Hepsen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/kdg-ti/programming-2.3/projects-21-22/ihsan.hepsen/issues"
+  },
+  "homepage": "https://gitlab.com/kdg-ti/programming-2.3/projects-21-22/ihsan.hepsen#readme"
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" th:href="@{/css/bundle.css}">
+    <link rel="icon" type="image/png" th:href="@{/fav_icon.png}"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script defer src="/js/bundle-handlePassenger.js"></script>
+    <title>Passenger Details</title>
+</head>
+<body class="container-fluid index">
+<header th:insert="~{nav::navbar}"></header>
+<h1 th:utext="#{p_d_h}">Passenger Details</h1>
+<main class="row">
+    <section class="detail-box col-xl-6">
+        <h2 id="pn" th:text="${passenger.getAccount().getUsername()}"></h2>
+        <hr>
+        <div class="details">
+            <p><b><span th:utext="#{p_d_age}"></span></b><span id="pa" th:text="${passenger.getAccount().getAge()}"></span></p>
+            <p><b><span th:utext="#{p_d_gender}"></span></b><span th:text="${passenger.getAccount().getGender().getGender()}"></span>
+            </p>
+            <p><b><span th:utext="#{p_d_transit}"></span></b><span
+                    th:text="${passenger.isTransitPassenger()} ? #{p_d_yes} : #{p_d_no}"></span></p>
+            <p><b><span th:utext="#{p_d_flights}"></span></b><span th:text="${passenger.getNumberOfFlights()}"></span>
+            </p>
+            <ul sec:authorize="hasRole('ROLE_USER')" th:each="flight : ${passenger.getFlights()}">
+                <li th:text="${flight.getFlightNumber()} + ': '+ ${flight.getDeparture()} + ' ' + #{p_d_d1} +
+                 ' '+ ${flight.getArrival()} + ' ' + #{p_d_d2}"></li>
+            </ul>
+            <section sec:authorize="isAuthenticated()">
+                <hr>
+                <div class="action-buttons row-cols-4">
+                    <input id="pId" type="hidden" th:value="${passenger.id}">
+                    <button type="button" class="btn btn-outline-danger" id="deleteButton"
+                            sec:authorize="hasRole('ROLE_ADMIN')">
+                        Remove
+                    </button>
+                    <!-- Button trigger edit modal -->
+                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop" sec:authorize="hasRole('ROLE_USER')">
+                        Edit
+                    </button>
+                    <!-- Button trigger flight booking modal -->
+                    <button type="button" class="btn btn-primary col-6" data-bs-toggle="modal"
+                            data-bs-target="#bookFlight" sec:authorize="hasRole('ROLE_USER')">
+                        <i class="bi bi-ticket"></i>
+                        Book a Flight
+                    </button>
+                </div>
+            </section>
+            <!-- Modals -->
+            <section class="modal fade" data-bs-backdrop="static" id="bookFlight"
+                     data-bs-keyboard="false" th:include="~{fragments/book-flight::bookFlight}">
+            </section>
+            <section class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered container-fluid">
+                    <div class="modal-content row">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Update Passenger</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body col-12">
+                            <div class="mb-3">
+                                <label for="age" class="col-3">Update Age:</label>
+                                <input id="age" class="col-9 form-control" name="age"
+                                type="number" min="0" max="120" placeholder="Enter age here">
+                            </div>
+                        </div>
+                        <div class="alert alert-danger visually-hidden" id="update-alert-box"></div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Discard</button>
+                            <input type="hidden" th:value="${passenger.id}">
+                            <button type="button" id="editButton" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+</main>
+</body>
+<footer th:insert="~{footer::copy}">Aviato &#169; 2021</footer>
+</html>

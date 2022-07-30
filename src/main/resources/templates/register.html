@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" th:href="@{/css/bundle.css}">
+    <link rel="icon" type="image/png" th:href="@{fav_icon.png}"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script defer src="/js/bundle-registration.js"></script>
+    <title>Sign Up - Aviato</title>
+</head>
+<body class="container-fluid index-page">
+<header th:insert="~{nav::navbar}"></header>
+<main class="container-fluid">
+    <h3>Register</h3>
+    <form th:method="post" class="row">
+        <div class="col-xl-4 col-sm-6 col-xs-6">
+        </div>
+        <label for="firstName">First Name</label>
+        <input id="firstName" type="text" name="name">
+<!--        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger alert-message-box" role="alert"></div>-->
+        <label for="lastName">Last Name</label>
+        <input id="lastName" type="text" name="lastName">
+        <label for="email">Email</label>
+        <input id="email" type="text" name="email" placeholder="example@mail.com">
+<!--        <div th:if="${#fields.hasErrors('lastName')}" class="alert alert-danger alert-message-box" role="alert"></div>-->
+        <label for="age">Age</label>
+        <input id="age" type="number" name="age">
+<!--        <div th:if="${#fields.hasErrors('age')}" class="alert alert-danger alert-message-box" role="alert"></div>-->
+        <label for="gender">Gender</label>
+        <select id="gender" name="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" placeholder="* * * * *">
+        <label for="password2">Retype Password</label>
+        <input id="password2" name="password2" type="password" placeholder="* * * * *">
+        <br>
+        <button class="submit-button" id="signUpButton" type="submit">Sign Up</button>
+    </form>
+    <p class="fs-6"><strong>For airline registration form click <a th:href="@{/register-airline}">here</a></strong></p>
+    <p class="fs-6"><strong>Already have an Aviato account? <a th:href="@{/login}">Log in</a> here!</strong></p>
+</main>
+</body>
+</html>

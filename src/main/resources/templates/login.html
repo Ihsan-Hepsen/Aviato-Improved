@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" th:href="@{/css/bundle.css}">
+    <link rel="icon" type="image/png" th:href="@{fav_icon.png}"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <title>Login - Aviato</title>
+</head>
+<body class="container-fluid index-page">
+<header th:insert="~{nav::navbar}"></header>
+<main class="container-fluid">
+<h3>Log In & Fly Right Away!</h3>
+<form th:action="@{/login}" th:method="post" th:object="${loginInfo}" class="row">
+    <label for="username">Username</label>
+    <input id="username" type="text" name="username" th:field="*{username}" class="form-control" placeholder="username or email">
+    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="alert alert-danger alert-message-box" role="alert"></div>
+    <label for="password">Password</label>
+    <input id="password" type="password" name="password" th:field="*{password}" class="form-control" placeholder="*****">
+    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger alert-message-box" role="alert"></div>
+    <br>
+    <button type="submit" id="loginBtn" class="btn btn-primary">Log In</button>
+</form>
+    <p class="fs-6"><strong>Don't have an Aviato account? <a th:href="@{/register}">Sign Up</a> here!</strong></p>
+</main>
+</body>
+</html>

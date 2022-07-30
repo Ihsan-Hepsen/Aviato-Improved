@@ -1,0 +1,54 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.5'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'com.github.node-gradle.node' version '3.2.0'
+}
+
+compileJava.dependsOn npm_run_build
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = "16"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // spring
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    runtimeOnly 'org.hsqldb:hsqldb'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // mocking
+    testImplementation 'org.mockito:mockito-junit-jupiter:4.4.0'
+    // gson
+    implementation 'com.google.code.gson:gson:2.8.8'
+    // bootstrap
+    implementation 'org.webjars:webjars-locator:0.42'
+    implementation 'org.webjars:bootstrap:5.1.2'
+    // model mapper
+    implementation "org.modelmapper:modelmapper:3.0.0"
+    // xml - for content negotiations
+    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml'
+    // spring security
+    implementation "org.springframework.boot:spring-boot-starter-security:2.6.3"
+    // thymeleaf
+    implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity5:3.0.4.RELEASE"
+    // spring test
+    testImplementation "org.springframework.security:spring-security-test:5.6.2"
+    // graphql
+    implementation 'com.graphql-java:graphql-spring-boot-starter:5.0.2'
+    implementation 'com.graphql-java:graphql-java-tools:5.2.4'
+    implementation 'io.leangen.graphql:graphql-spqr-spring-boot-starter:0.0.6'
+    implementation group: 'com.graphql-java-kickstart', name: 'playground-spring-boot-starter', version: '5.10.0'
+}
+
+test {
+    useJUnitPlatform()
+}
+targetCompatibility = JavaVersion.VERSION_16

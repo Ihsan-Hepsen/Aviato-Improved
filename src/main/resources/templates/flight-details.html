@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" th:href="@{/css/bundle.css}">
+    <link rel="icon" type="image/png" th:href="@{/fav_icon.png}"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script defer src="/js/bundle-handleFlight.js"></script>
+    <script defer src="/js/bundle-handlePassenger.js"></script>
+    <script defer src="/js/bundle-datePickr.js"></script>
+    <script defer src="/js/bundle-detailPopBox.js"></script>
+    <title>Flight Details</title>
+</head>
+<body class="container-fluid index">
+<header th:insert="~{nav::navbar}"></header>
+<main class="row">
+    <section class="detail-box col-xl-6">
+        <h2><span th:utext="#{d_flight}"></span> <span th:text="${flight.getFlightNumber()} + ' '"></span><span
+                th:utext="#{detail}"></span></h2>
+        <hr>
+        <div class="details">
+            <p><b><span th:utext="#{d_airline}"></span></b><span
+                    th:text="${flight.getAirline().getAirlineName()}"></span>
+                <a sec:authorize="isAuthenticated()"
+                   th:href="@{/airlines/airline-details(an = ${flight.getAirline().getAirlineName()})}">
+                    click to see details</a></p>
+            <p><b><span th:utext="#{d_fn}"></span></b><span th:text="${flight.getFlightNumber()}"></span></p>
+            <p><b><span th:utext="#{d_date}"></span></b><span id="schedule" th:text="${flight.getFlightSchedule()} + ' '"></span><span
+                    id="status" th:utext="${flight.isOnTime()} ? #{d_on_time} : #{d_delayed}"></span></p>
+            <p><b><span th:utext="#{d_departure}"></span></b><span th:text="${flight.getDeparture()}"></span></p>
+            <p><b><span th:utext="#{d_arrival}"></span></b><span th:text="${flight.getArrival()}"></span></p>
+            <p><b><span th:utext="#{d_fType}"></span></b><span th:text="${flight.getFlightType().getValue()}"></span></p>
+            <p sec:authorize="hasRole('ROLE_ADMIN')"><b>Passengers: </b><span th:text="${flight.getPassengerList().size()}"></span></p>
+            <div sec:authorize="hasRole('ROLE_ADMIN')">
+
+            </div>
+            <section sec:authorize="hasRole('ROLE_ADMIN')">
+                <hr>
+                <div class="action-buttons row-cols-4">
+                    <input type="hidden" id="fId" th:value="${flight.id}">
+                    <button type="button" class="btn btn-outline-dark col-5"
+                            data-bs-toggle="modal" data-bs-target="#passengerList">
+                        Passenger List
+                    </button>
+                    <button type="button" class="btn btn-outline-dark col-3" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop">
+                        Edit
+                    </button>
+                    <input type="hidden" th:value="${flight.id}">
+                    <button type="button" class="btn btn-outline-danger col-3" id="deleteButton">Remove</button>
+
+                    <section class="modal fade" data-bs-backdrop="static" id="passengerList"
+                             data-bs-keyboard="false" th:include="~{fragments/passenger-list-modal::passengerList}">
+                    </section>
+                    <!-- Modal -->
+                    <section class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                             tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered container-fluid">
+                            <div class="modal-content row">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel"
+                                        th:text="'Update Flight ' + ${flight.flightNumber}">Update Flight</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body col-12">
+                                    <div class="col-6">
+                                        <label for="flightStatus"><strong>New Status:</strong></label>
+                                        <select id="flightStatus" name="flightStatus">
+                                            <option value="true">On Time</option>
+                                            <option value="false">Delayed</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="flightSchedule"><strong>
+                                            New Departure Time </strong><i class="bi bi-calendar-date"></i></label>
+                                        <input id="flightSchedule" class="flatpickr js-flatpickr-date"
+                                               name="flightSchedule" type="date" placeholder="Departure date">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Discard</button>
+                                    <input type="hidden" th:value="${flight.id}">
+                                    <button type="button" id="editButton" class="btn btn-outline-success">Save Changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+<!--            <br>-->
+<!--            <div sec:authorize="hasRole('ROLE_ADMIN')">-->
+<!--                <a th:href="@{../passengers/add}" id="button" class="btn btn-primary btn-lg"><i-->
+<!--                        class="bi bi-plus-circle"></i> Add Passenger</a>-->
+<!--                <div id="tooltip" role="tooltip">-->
+<!--                    Click to add a new passenger-->
+<!--                    <div id="arrow" data-popper-arrow></div>-->
+<!--                </div>-->
+<!--            </div>-->
+        </div>
+    </section>
+</main>
+<footer th:insert="~{footer::copy}">Aviato &#169; 2021</footer>
+</body>
+</html>

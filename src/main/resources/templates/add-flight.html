@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" th:href="@{/css/bundle.css}">
+    <link rel="icon" type="image/png" th:href="@{/fav_icon.png}"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script defer src="/js/bundle-addFlight.js"></script>
+    <script defer src="/js/bundle-datePickr.js"></script>
+    <title>Add Flight</title>
+</head>
+<body class="container-fluid index" sec:authorize="hasRole('ROLE_ADMIN')">
+<header th:insert="~{nav::navbar}"></header>
+<h1 th:utext="#{heading}">Add Flight</h1>
+<main class="row">
+    <form method="post" th:object="${flight}" class="col-xl-4 col-sm-6 col-xs-6">
+<!--        <label for="airline" th:utext="#{airline}">Airline</label>-->
+<!--        <input id="airline" name="airline" type="text" placeholder="Airline name">-->
+        <label for="airline" th:utext="#{airline}">Airline</label>
+        <input id="airline" disabled th:text="${#authentication.getPrincipal().getUsername()}" th:value="${#authentication.getPrincipal().getUsername()}">
+<!--        <select id="airline" name="airline" type="text">Select Airline-->
+<!--            <option th:each="airline : ${airlines}" th:value="${airline.toString()}" th:text="${airline.toString()}"></option>-->
+<!--        </select>-->
+<!--        <div th:if="${#fields.detailedErrors('airline')}" th:errors="*{airline}" class="alert alert-danger alert-message-box" role="alert"></div>-->
+        <label for="flightNumber" th:utext="#{f_number}">Flight Number</label>
+        <input id="flightNumber" name="flightNumber" type="text">
+        <div th:if="${#fields.detailedErrors('flightNumber')}" th:errors="*{flightNumber}" class="alert alert-danger alert-message-box" role="alert"></div>
+        <label for="flightType" th:utext="#{f_type}">Flight Type</label>
+        <select id="flightType" name="flightType">
+<!--            <option value="Commercial">Commercial</option>-->
+<!--            <option value="Private">Private</option>-->
+            <option th:each="type : ${types}" th:value="${type.name()}" th:text="${type.getValue()}"></option>
+        </select>
+        <label for="departure" th:utext="#{departure}">Departure</label>
+        <input id="departure" name="departure" type="text" placeholder="Departure city">
+        <div th:if="${#fields.detailedErrors('departure')}" th:errors="*{departure}" class="alert alert-danger alert-message-box" role="alert"></div>
+        <label for="arrival" th:utext="#{arrival}">Arrival</label>
+        <input id="arrival" name="arrival" type="text" placeholder="Arrival city">
+        <div th:if="${#fields.detailedErrors('arrival')}" th:errors="*{arrival}" class="alert alert-danger alert-message-box" role="alert"></div>
+        <label for="date" th:utext="#{date}">Date</label>
+        <input id="date" name="scheduledOn" class="flatpickr js-flatpickr-date" type="date" placeholder="Departure date" th:min="${today}">
+        <div th:if="${#fields.detailedErrors('scheduledOn')}" th:errors="*{scheduledOn}" class="alert alert-danger alert-message-box" role="alert"></div>
+        <div class="form-check-inline check-box">
+            <input id="flightStatus" class="form-check-input" type="checkbox" name="onTime">
+            <label for="flightStatus" class="form-check-label" th:utext="#{on_time}">On Time</label>
+        </div>
+        <input class="submit-button" type="button" id="addButton" th:value="#{confirm}">
+    </form>
+</main>
+<footer th:insert="~{footer::copy}">Aviato &#169; 2021</footer>
+</body>
+</html>

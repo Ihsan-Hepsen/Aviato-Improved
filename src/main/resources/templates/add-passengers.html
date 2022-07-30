@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" th:href="@{/css/bundle.css}">
+    <link rel="icon" type="image/png" th:href="@{/fav_icon.png}"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script defer src="/js/bundle-addPassenger.js"></script>
+    <title>Add Passenger</title>
+</head>
+<body class="container-fluid index">
+<header th:insert="~{nav::navbar}"></header>
+<h1 th:utext="#{p_a_h}">Add Passenger</h1>
+<main class="row">
+    <form method="post" th:object="${passenger}" class="col-xl-4 col-sm-6 col-xs-6">
+        <label for="firstName" th:utext="#{fname_label}">First Name</label>
+        <input id="firstName" type="text" name="name">
+        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger alert-message-box" role="alert"></div>
+        <label for="lastName" th:utext="#{lname_label}">Last Name</label>
+        <input id="lastName" type="text" name="lastName">
+        <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="alert alert-danger alert-message-box" role="alert"></div>
+        <label for="age" th:utext="#{age_label}">Age</label>
+        <input id="age" type="number" name="age" th:field="*{age}">
+        <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}" class="alert alert-danger alert-message-box" role="alert"></div>
+        <label for="gender" th:utext="#{gender_label}">Gender</label>
+        <select id="gender" name="gender">
+            <option value="male" th:utext="#{g_1}">Male</option>
+            <option value="female" th:utext="#{g_2}">Female</option>
+        </select>
+        <div class="form-check-inline check-box">
+            <input id="transit" name="transitPassenger" class="form-check-input" type="checkbox">
+            <label for="transit" class="form-check-label" th:utext="#{transit_label}">Transit Passenger</label>
+        </div>
+        <br>
+        <input class="submit-button" id="addButton" type="button" th:value="#{submit_bttn}">
+    </form>
+</main>
+<footer th:insert="~{footer::copy}">Aviato &#169; 2021</footer>
+</body>
+</html>

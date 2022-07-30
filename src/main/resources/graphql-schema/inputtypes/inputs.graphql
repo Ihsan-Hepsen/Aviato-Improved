@@ -1,0 +1,30 @@
+# Input Types
+input UserInput {
+    username: String!
+    email: String!
+    password: String!
+    age: Int!
+    gender: Gender!
+    role: Role!
+}
+
+input PassengerInput {
+    transitPassenger: Boolean!
+    account: String!
+}
+
+input FlightInput {
+    airline: String!
+    flightNumber: String!
+    flightType: FlightType!
+    departure: String!
+    arrival: String!
+    scheduledOn: LocalDate!
+    onTime: Boolean!
+}
+
+input AirlineInput {
+    airlineName: String!
+    fleetSize: Int!
+    totalDestinations: Int!
+}
