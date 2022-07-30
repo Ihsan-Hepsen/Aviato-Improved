@@ -3,7 +3,6 @@
 
 ## PROJECT OWNER INFORMATION
 - **STUDENT NAME**: IHSAN HEPSEN
-- **STUDENT EMAIL**: ihsan.hepsen@student.kdg.com
 - **STUDENT ID**: 0145029-14
 
 ---
