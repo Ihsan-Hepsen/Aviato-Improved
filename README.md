@@ -1,11 +1,11 @@
-# PROGRAMMING 2.3 SELF PROJECT ~ Research - Ihsan Hepsen
-## **_!_ THIS PROJECT IMPLEMENTS THE RESEARCH TOPIC _!_**
+# CRUD Application (Improved) with GraphQL - Ihsan Hepsen
 
-## PROJECT OWNER INFORMATION
-- **STUDENT NAME**: IHSAN HEPSEN
-- **STUDENT ID**: 0145029-14
+## PROJECT OVERVIEW
 
----
+- In this project an airline, flight, and a passenger can be viewed. Flights and Passengers can be browsed and new
+  flights or passengers can be added to the system. This system shows all the flights, passengers, and airlines that
+  exists in its records(Database). Please see below sections to see the details of an entity class.
+
 
 ## How To Run
 
@@ -101,4 +101,4 @@
 
 - There is a many-to-many relation between Flight and Passenger classes. Every passenger can have one or more flights
   and every flight can have one or many passenger on board.
-    - Please note: a passenger can have 0(zero) flights, and a flight can have 0(zero) passengers.
+  - Please note: a passenger can have 0(zero) flights, and a flight can have 0(zero) passengers.
